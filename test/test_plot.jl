@@ -19,6 +19,8 @@ vs = [0,-1,0,1,2,1,0,-1,1,-1]
 fig, ax = PQ.plot_mesh(
     QM.active_vertex_coordinates(mesh),
     QM.active_quad_connectivity(mesh);
+    elem_numbers = true,
+    internal_order=true,
     vertex_score = vs
 )
 fig
