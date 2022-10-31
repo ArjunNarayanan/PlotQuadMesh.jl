@@ -147,5 +147,5 @@ function plot_mesh(
         plot_internal_order!(ax, points, connectivity)
     end
 
-    return fig, ax
+    return fig
 end
