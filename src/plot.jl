@@ -7,10 +7,7 @@ function plot_mesh!(
     ax,
     points,
     connectivity;
-    elem_numbers=false,
-    node_numbers=false,
     elem_color=[0.8, 1.0, 0.8],
-    vertex_score=[]
 )
     ts = Array([connectivity[1:3, :] connectivity[[1, 3, 4], :]]' .- 1)
 
@@ -132,7 +129,6 @@ function plot_mesh(
         points,
         connectivity,
         elem_color=elem_color,
-        vertex_score=vertex_score
     )
 
     if elem_numbers
