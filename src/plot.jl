@@ -23,34 +23,33 @@ function plot_mesh!(
 
 end
 
-function plot_node_numbers!(ax, points)
+function plot_node_numbers!(ax, points; size=400, fontsize = 15)
     tpars = Dict(
-        :color => "k",
+        :color => "white",
         :horizontalalignment => "center",
         :verticalalignment => "center",
         :fontfamily => "sans-serif",
-        :fontsize => 10,
+        :fontsize => fontsize,
     )
-    ax.plot(
+    ax.scatter(
         points[1, :],
         points[2, :],
-        markersize=12,
-        marker="o",
-        linestyle="none",
-        color=[0.6, 0.8, 1],
+        s=size,
+        facecolors="black",
+        alpha = 1.0,
     )
     for (idx, point) in enumerate(eachcol(points))
         ax.text(point[1], point[2], "$idx"; tpars...)
     end
 end
 
-function plot_elem_numbers!(ax, points, connectivity)
+function plot_elem_numbers!(ax, points, connectivity; fontsize = 15)
     tpars = Dict(
         :color => "k",
         :horizontalalignment => "center",
         :verticalalignment => "center",
         :fontfamily => "sans-serif",
-        :fontsize => 10,
+        :fontsize => fontsize,
     )
     for (idx, nodes) in enumerate(eachcol(connectivity))
         pc = sum(points[:, nodes], dims=2) / 4
@@ -118,7 +117,8 @@ function plot_mesh(
     internal_order = false,
     elem_color=[0.8, 1.0, 0.8],
     vertex_score=[],
-    figsize = (15,15)
+    figsize = (15,15),
+    fontsize = 15,
 )
 
     fig, ax = subplots(figsize=figsize)
@@ -132,11 +132,11 @@ function plot_mesh(
     )
 
     if elem_numbers
-        plot_elem_numbers!(ax, points, connectivity)
+        plot_elem_numbers!(ax, points, connectivity, fontsize = fontsize)
     end
 
     if node_numbers
-        plot_node_numbers!(ax, points)
+        plot_node_numbers!(ax, points, fontsize = fontsize)
     end
 
     if length(vertex_score) > 0
