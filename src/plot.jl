@@ -23,7 +23,7 @@ function plot_mesh!(
 
 end
 
-function plot_node_numbers!(ax, points; size=400, fontsize = 15)
+function plot_node_numbers!(ax, points, fontsize; size=600)
     tpars = Dict(
         :color => "white",
         :horizontalalignment => "center",
@@ -43,7 +43,7 @@ function plot_node_numbers!(ax, points; size=400, fontsize = 15)
     end
 end
 
-function plot_elem_numbers!(ax, points, connectivity; fontsize = 15)
+function plot_elem_numbers!(ax, points, connectivity, fontsize)
     tpars = Dict(
         :color => "k",
         :horizontalalignment => "center",
@@ -94,12 +94,12 @@ function plot_element_internal_order!(ax, points, tpars; scale = 0.25)
     end
 end
 
-function plot_internal_order!(ax, points, connectivity)
+function plot_internal_order!(ax, points, connectivity, fontsize)
     tpars = Dict(
         :color => "r",
         :horizontalalignment => "center",
         :verticalalignment => "center",
-        :fontsize => 12,
+        :fontsize => fontsize,
         :fontweight => "bold",
     )
 
@@ -112,8 +112,8 @@ end
 function plot_mesh(
     points,
     connectivity;
-    elem_numbers=false,
-    node_numbers=false,
+    number_elements=false,
+    number_vertices=false,
     internal_order = false,
     elem_color=[0.8, 1.0, 0.8],
     vertex_score=[],
@@ -131,12 +131,12 @@ function plot_mesh(
         elem_color=elem_color,
     )
 
-    if elem_numbers
-        plot_elem_numbers!(ax, points, connectivity, fontsize = fontsize)
+    if number_elements
+        plot_elem_numbers!(ax, points, connectivity, fontsize)
     end
 
-    if node_numbers
-        plot_node_numbers!(ax, points, fontsize = fontsize)
+    if number_vertices
+        plot_node_numbers!(ax, points, fontsize)
     end
 
     if length(vertex_score) > 0
@@ -144,8 +144,10 @@ function plot_mesh(
     end
 
     if internal_order
-        plot_internal_order!(ax, points, connectivity)
+        plot_internal_order!(ax, points, connectivity, fontsize)
     end
 
+    fig.tight_layout()
+    
     return fig
 end
