@@ -57,19 +57,19 @@ function plot_elem_numbers!(ax, points, connectivity, fontsize)
     end
 end
 
-function plot_vertex_score!(ax, points, vertex_score)
+function plot_vertex_score!(ax, points, vertex_score, fontsize; s = 1000)
     @assert length(vertex_score) == size(points, 2) "Dimension mismatch between vertex scores and points"
 
     tpars = Dict(
         :color => "w",
         :horizontalalignment => "center",
         :verticalalignment => "center",
-        :fontsize => 12,
+        :fontsize => fontsize,
         :fontweight => "bold",
     )
 
-    ax.scatter(points[1, vertex_score.<0], points[2, vertex_score.<0], 450, color="r")
-    ax.scatter(points[1, vertex_score.>0], points[2, vertex_score.>0], 450, color="m")
+    ax.scatter(points[1, vertex_score.<0], points[2, vertex_score.<0], s=s, color="r")
+    ax.scatter(points[1, vertex_score.>0], points[2, vertex_score.>0], s=s, color="m")
 
     for (i, point) in enumerate(eachcol(points))
         if vertex_score[i] != 0
@@ -118,7 +118,7 @@ function plot_mesh(
     elem_color=[0.8, 1.0, 0.8],
     vertex_score=[],
     figsize = (15,15),
-    fontsize = 15,
+    fontsize = 20,
 )
 
     fig, ax = subplots(figsize=figsize)
@@ -140,7 +140,7 @@ function plot_mesh(
     end
 
     if length(vertex_score) > 0
-        plot_vertex_score!(ax, points, vertex_score)
+        plot_vertex_score!(ax, points, vertex_score, fontsize)
     end
 
     if internal_order
@@ -148,6 +148,6 @@ function plot_mesh(
     end
 
     fig.tight_layout()
-    
+
     return fig
 end
