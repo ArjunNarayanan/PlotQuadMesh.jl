@@ -149,5 +149,5 @@ function plot_mesh(
 
     fig.tight_layout()
 
-    return fig
+    return fig, ax
 end
