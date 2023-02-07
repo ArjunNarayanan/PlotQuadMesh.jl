@@ -43,7 +43,9 @@ function plot_node_numbers!(ax, points, fontsize, size)
     end
 end
 
-function plot_elem_numbers!(ax, points, connectivity, fontsize)
+function plot_elem_numbers!(ax, points, connectivity, element_numbers, fontsize)
+    @assert size(connectivity, 2) == length(element_numbers)
+    
     tpars = Dict(
         :color => "k",
         :horizontalalignment => "center",
@@ -52,8 +54,9 @@ function plot_elem_numbers!(ax, points, connectivity, fontsize)
         :fontsize => fontsize,
     )
     for (idx, nodes) in enumerate(eachcol(connectivity))
+        elem_id = element_numbers[idx]
         pc = sum(points[:, nodes], dims=2) / 4
-        ax.text(pc[1], pc[2], "$idx"; tpars...)
+        ax.text(pc[1], pc[2], "$elem_id"; tpars...)
     end
 end
 
@@ -132,8 +135,11 @@ function plot_mesh(
         elem_color=elem_color,
     )
 
-    if number_elements
-        plot_elem_numbers!(ax, points, connectivity, fontsize)
+    if number_elements isa Bool && number_elements
+        element_numbers = 1:size(connectivity, 2)
+        plot_elem_numbers!(ax, points, connectivity, element_numbers, fontsize)
+    elseif number_elements isa Vector
+        plot_elem_numbers!(ax, points, connectivity, number_elements, fontsize)
     end
 
     if number_vertices
