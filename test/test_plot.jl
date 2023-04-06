@@ -19,11 +19,22 @@ vs = [0,-1,0,1,2,1,0,-1,1,-1]
 fig, ax = PQ.plot_mesh(
     QM.active_vertex_coordinates(mesh),
     QM.active_quad_connectivity(mesh);
-    elem_numbers = true,
+    number_elements = true,
     internal_order=true,
     vertex_score = vs
 )
 fig
+
+mesh = QM.square_mesh(2)
+QM.split!(mesh, 3, 3)
+mark_vertices = findall(mesh.is_geometric_vertex)
+fig, ax = PQ.plot_mesh(
+    QM.active_vertex_coordinates(mesh),
+    QM.active_quad_connectivity(mesh),
+    mark_vertices=mark_vertices
+)
+fig
+
 
 # Random.seed!(123)
 # mesh = RQ.random_quad_mesh(10)

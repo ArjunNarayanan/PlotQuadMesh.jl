@@ -112,12 +112,17 @@ function plot_internal_order!(ax, points, connectivity, fontsize)
     end
 end
 
+function plot_mark_vertices!(ax, points, vertex_ids, size)
+    ax.scatter(points[1,vertex_ids], points[2,vertex_ids], s=size, facecolors="red", alpha=1.0)
+end
+
 function plot_mesh(
     points,
     connectivity;
     number_elements=false,
     number_vertices=false,
     internal_order = false,
+    mark_vertices = [],
     elem_color=[0.8, 1.0, 0.8],
     vertex_score=[],
     figsize = (15,15),
@@ -152,6 +157,10 @@ function plot_mesh(
 
     if internal_order
         plot_internal_order!(ax, points, connectivity, fontsize)
+    end
+
+    if length(mark_vertices) > 0
+        plot_mark_vertices!(ax, points, mark_vertices, vertex_size^2)
     end
 
     fig.tight_layout()
