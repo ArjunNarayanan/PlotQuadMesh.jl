@@ -127,7 +127,7 @@ function plot_mesh(
     vertex_score=[],
     figsize = (15,15),
     fontsize = 20,
-    vertex_size = 20
+    vertex_size = 20,
 )
 
     fig, ax = subplots(figsize=figsize)
