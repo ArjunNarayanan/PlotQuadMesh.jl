@@ -76,7 +76,7 @@ function plot_vertex_score!(ax, points, vertex_score, fontsize, vertex_size)
 
     for (i, point) in enumerate(eachcol(points))
         if vertex_score[i] != 0
-            txt = @sprintf("1.1f", vertex_score[i])
+            txt = @sprintf("%1.1f", vertex_score[i])
             if vertex_score[i] > 0
                 txt = "+" * txt
             end
