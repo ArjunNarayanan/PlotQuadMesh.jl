@@ -75,9 +75,16 @@ function plot_vertex_score!(ax, points, vertex_score, fontsize, vertex_size)
     ax.scatter(points[1, vertex_score.>0], points[2, vertex_score.>0], s=vertex_size, color="m")
 
     for (i, point) in enumerate(eachcol(points))
-        if vertex_score[i] != 0
-            txt = @sprintf("%1.1f", vertex_score[i])
-            if vertex_score[i] > 0
+        vs = vertex_score[i]
+        if vs != 0
+            txt = ""
+            if isinteger(vs)
+                txt = txt * @sprintf("%1d", vs)
+            else
+                txt = txt * @sprintf("%1.1f", vs)
+            end
+            
+            if vs > 0
                 txt = "+" * txt
             end
             ax.text(point[1], point[2], txt; tpars...)
